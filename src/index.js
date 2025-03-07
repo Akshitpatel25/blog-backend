@@ -94,7 +94,7 @@ app.get("/get-token", (req, res) => {
   try {
     const token =  req.cookies.token;
     if (!token) {
-      console.log("No token found");
+      // console.log("No token found");
       return res.status(201).json({ token: null });
     }
     const decoded = jwt.verify(token, process.env.JWTTOKEN);
@@ -112,7 +112,7 @@ app.get("/logout", (req, res) => {
 
 app.post("/signup", async function (req, res) {
   const { name, email, password } = await req.body;
-  console.log(name, email, password);
+  // console.log(name, email, password);
 
   const result = userVerification.safeParse({ name, email, password });
   if (!result.success) {
@@ -161,6 +161,7 @@ app.post("/signin",async function (req, res) {
   res.cookie("token", token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
+    sameSite: "Strict",
     maxAge: 24 * 60 * 60 * 1000,
   });
   
@@ -204,7 +205,7 @@ app.get("/get-all-posts", async function (req, res) {
     const posts = await Post.find();
     res.status(200).json({ posts });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     return res
       .status(500)
       .json({ message: "Internal Server Error on get all post" });
@@ -278,7 +279,7 @@ app.post('/comment-on-post', async function(req,res) {
 
     res.status(200).json({message: "success"});
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     return res.status(500).json({message: "Internal Server Error on comment",})  
   }
 })
@@ -301,7 +302,7 @@ app.get('/comments/:id', async function(req,res) {
 app.post('/delete-comment', async function(req,res) {
   try {
     const {CommentID, PostID} = req.body;
-    console.log(CommentID, PostID);
+    // console.log(CommentID, PostID);
     const comment = await Comment.findById(CommentID);
     if (!comment) {
       return res.status(404).json({message: "Comment not found"})
@@ -337,7 +338,7 @@ app.post("/ai-discription", async function (req, res) {
 
     return res.status(200).json({ message: responseText });
   } catch (error) {
-    console.error("Gemini API Error:", error);
+    // console.error("Gemini API Error:", error);
     return res.status(500).json({ message: "Internal Server Error on Gemini test", error });
   }
 });
