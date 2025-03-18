@@ -108,7 +108,7 @@ app.get("/logout", (req, res) => {
     secure: process.env.NODE_ENV === "production" ? true : false,
     sameSite: "None",
   });
-  res.status(200).json({ message: "Logged out" });
+  res.status(200).json({ message: "success" });
 });
 
 app.post("/signup", async function (req, res) {
