@@ -103,8 +103,12 @@ app.get("/get-token", (req, res) => {
 
 
 app.get("/logout", (req, res) => {
-  res.clearCookie("token");
-  res.status(200).json({ message: "success" });
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production" ? true : false,
+    sameSite: "None",
+  });
+  res.status(200).json({ message: "Logged out" });
 });
 
 app.post("/signup", async function (req, res) {
