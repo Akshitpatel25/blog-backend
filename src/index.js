@@ -102,7 +102,7 @@ app.get("/get-token", (req, res) => {
 });
 
 
-app.get("/logout", (req, res) => {
+app.post("/logout", (req, res) => {
   res.clearCookie("token", {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production" ? true : false,
